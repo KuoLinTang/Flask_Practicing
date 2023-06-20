@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Stock Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* height: 100vh; */
+        }
+
+        .container {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>Your choice: {{company}} | Stock Code: {{stock}}</h3>
+        <!-- <img src="line_plot.png" width="300" height="200"></img> -->
+        <hr>
+        {{dataframe | safe}}
+        <hr>
+        <!-- 添加一个按钮 -->
+        <button onclick="goBack()">Go Back</button>
+    </div>
+
+    <!-- Add a function to go back to the last page. -->
+    <script>
+        function goBack() {
+            // 使用 history.go() 方法返回上一页
+            history.go(-1);
+        }
+    </script>
+</body>
+
+</html>
