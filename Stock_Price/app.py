@@ -1,17 +1,11 @@
-import time
 import io
-import os
 from flask import Flask, render_template, request, Response
-import pandas as pd
 import yfinance as yf
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib
 # Avoid UserWarning: Starting a Matplotlib GUI outside of the main thread will likely fail.
 matplotlib.use('agg')
-
-img_name = 'line_plot.png'
-img_full_name = f'D:/Programming/Flask_Practicing/Stock_Price/template/{img_name}'
 
 app = Flask('Stock Exchanger', static_folder='static',
             template_folder='template')
