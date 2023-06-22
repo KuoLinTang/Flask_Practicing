@@ -21,7 +21,8 @@
 <body>
     <div class="container">
         <h3>Your choice: {{company}} | Stock Code: {{stock}}</h3>
-        <!-- <img src="line_plot.png" width="300" height="200"></img> -->
+        <hr>
+        <img src="/stock/plot.png?stock={{stock}}" width="800" height="300"></img>
         <hr>
         {{dataframe | safe}}
         <hr>

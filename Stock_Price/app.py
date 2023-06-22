@@ -1,9 +1,14 @@
-from flask import Flask, render_template, request
+import time
+import io
+import os
+from flask import Flask, render_template, request, Response
 import pandas as pd
 import yfinance as yf
 import matplotlib.pyplot as plt
-import os
-import time
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import matplotlib
+# Avoid UserWarning: Starting a Matplotlib GUI outside of the main thread will likely fail.
+matplotlib.use('agg')
 
 img_name = 'line_plot.png'
 img_full_name = f'D:/Programming/Flask_Practicing/Stock_Price/template/{img_name}'
@@ -23,16 +28,15 @@ def get_stock_data(stock_code: str):
     return stock_data
 
 
-# def plot_stock_data(stock_data, stock):
-#     if os.path.isfile(img_full_name):
-#         os.remove(img_full_name)
-#     time.sleep(1)
-#     plt.plot(stock_data['Close'], linewidth=1)
-#     plt.xlabel('Date')
-#     plt.ylabel('Close Price')
-#     plt.title(f'{stock} Historical Chart')
-#     plt.savefig(img_full_name)
-#     plt.close()
+def plot_stock_data(stock_data, stock):
+
+    fig, ax = plt.subplots(figsize=(10, 4))
+    ax.plot(stock_data['Close'], linewidth=1)
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Close Price')
+    ax.set_title(f'{stock} Historical Chart')
+
+    return fig
 
 
 @app.route('/')
@@ -40,14 +44,24 @@ def home():
     return render_template('homepage.html', company_options=company_list)
 
 
-@app.route('/stock/', methods=["POST"])
+@app.route('/stock/', methods=["POST", "GET"])
 def stock():
     company = request.form['selection']
     stock = stock_dict[company]  # get value of a business key
     dataframe = get_stock_data(stock)
-    # plot_stock_data(dataframe, stock)
     return render_template('stock.html', company=company, stock=stock,
                            dataframe=dataframe.tail(14).to_html())
+
+
+# flask will create the plot when the stock.html is rendered
+@app.route('/stock/plot.png')
+def plot():
+    stock = request.args.get('stock')
+    dataframe = get_stock_data(stock)
+    fig = plot_stock_data(dataframe, stock)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
 
 
 if __name__ == "__main__":
