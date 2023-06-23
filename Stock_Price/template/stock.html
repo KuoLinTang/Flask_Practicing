@@ -9,32 +9,91 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* height: 100vh; */
         }
 
-        .container {
+        .center-container {
             text-align: center;
+        }
+
+        .horizontal-container {
+            display: flex;
+        }
+
+        .left {
+            width: 50%;
+            margin-right: 10px;
+        }
+
+        .right {
+            width: 50%;
+            margin-left: 10px;
+        }
+
+        #backToTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            /* Not display the button at the beginning */
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h3>Your choice: {{company}} | Stock Code: {{stock}}</h3>
-        <hr>
-        <img src="/stock/plot.png?stock={{stock}}" width="800" height="300"></img>
-        <hr>
-        {{dataframe | safe}}
-        <hr>
-        <!-- 添加一个按钮 -->
+    <div>
         <button onclick="goBack()">Go Back</button>
+        <div class="center-container">
+
+            <h2>Your choice: {{company}} | Stock Code: {{stock}}</h2>
+
+            <hr>
+            <div>
+                <button class="update-btn" data-period="Max">Max</button>
+                <button class="update-btn" data-period="1_year">1 Year</button>
+                <button class="update-btn" data-period="6_months">6 Months</button>
+                <button class="update-btn" data-period="1_month">1 Month</button>
+            </div>
+            <img src="/stock/plot.png?stock={{stock}}" width="800" height="300"></img>
+
+            <hr>
+            <div>
+                <h3>Price for Past 14 Days</h3>
+                <div class="horizontal-container">
+                    <div class="left">
+                        {{dataframe_left | safe}}
+                    </div>
+                    <div class="right">
+                        {{dataframe_right | safe}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="backToTopBtn" onclick="scrollToTop()">Go Top</button>
     </div>
 
     <!-- Add a function to go back to the last page. -->
     <script>
         function goBack() {
-            // 使用 history.go() 方法返回上一页
             history.go(-1);
+        }
+    </script>
+    <!-- Create a function to scroll back to the top -->
+    <script>
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            var backToTopBtn = document.getElementById("backToTopBtn");
+            // when the page is scrolled over 40 px then the button will appear
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        }
+
+        function scrollToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
         }
     </script>
 </body>

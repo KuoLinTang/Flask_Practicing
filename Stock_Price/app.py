@@ -1,6 +1,6 @@
+from stockdata import StockData
 import io
 from flask import Flask, render_template, request, Response
-import yfinance as yf
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib
@@ -15,20 +15,14 @@ company_list = ['Microsoft', 'Tesla', 'Nvidia', 'Apple',
 stock_list = ['MSFT', 'TSLA', 'NVDA', 'AAPL',
               'GOOGL', 'AMZN', 'META', 'AMD', 'NFLX']
 stock_dict = dict(zip(company_list, stock_list))
+stock_data = StockData()
 
 
-def get_stock_data(stock_code: str):
-    stock_data = yf.Ticker(stock_code).history(period="max")
-    return stock_data
-
-
-def plot_stock_data(stock_data, stock):
+def plot_stock_data(stock_data):
 
     fig, ax = plt.subplots(figsize=(10, 4))
     ax.plot(stock_data['Close'], linewidth=1)
-    ax.set_xlabel('Date')
     ax.set_ylabel('Close Price')
-    ax.set_title(f'{stock} Historical Chart')
 
     return fig
 
@@ -40,19 +34,20 @@ def home():
 
 @app.route('/stock/', methods=["POST", "GET"])
 def stock():
+    global stock_data
     company = request.form['selection']
     stock = stock_dict[company]  # get value of a business key
-    dataframe = get_stock_data(stock)
+    stock_data = StockData(stock)
     return render_template('stock.html', company=company, stock=stock,
-                           dataframe=dataframe.tail(14).to_html())
+                           dataframe_left=stock_data.data.iloc[-14:-7].to_html(),
+                           dataframe_right=stock_data.data.iloc[-7:].to_html())
 
 
 # flask will create the plot when the stock.html is rendered
 @app.route('/stock/plot.png')
 def plot():
-    stock = request.args.get('stock')
-    dataframe = get_stock_data(stock)
-    fig = plot_stock_data(dataframe, stock)
+    global stock_data
+    fig = plot_stock_data(stock_data.get_close_price())
     output = io.BytesIO()
     FigureCanvas(fig).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
