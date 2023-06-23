@@ -49,12 +49,13 @@
             <hr>
             <div>
                 <button class="update-btn" data-period="Max">Max</button>
+                <button class="update-btn" data-period="2_years">2 Years</button>
                 <button class="update-btn" data-period="1_year">1 Year</button>
                 <button class="update-btn" data-period="6_months">6 Months</button>
                 <button class="update-btn" data-period="1_month">1 Month</button>
             </div>
-            <img src="/stock/plot.png?stock={{stock}}" width="800" height="300"></img>
-
+            <img id="line-chart" src="data:image/png;base64,{{ plot_data }}" width="800" height="300"
+                alt="Stock Price Line Chart">
             <hr>
             <div>
                 <h3>Price for Past 14 Days</h3>
@@ -95,6 +96,27 @@
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;
         }
+    </script>
+    <!-- Create script that allows to update plots with button clicked -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.update-btn').click(function () {
+                var timePeriod = $(this).data('period');
+                updateLineChart(timePeriod);
+            });
+
+            function updateLineChart(period) {
+                $.ajax({
+                    url: '/stock/update_plot',
+                    method: 'POST',
+                    data: { period: period },
+                    success: function (data) {
+                        $('#line-chart').attr('src', 'data:image/png;base64,' + data.plot_data);
+                    }
+                });
+            }
+        });
     </script>
 </body>
 

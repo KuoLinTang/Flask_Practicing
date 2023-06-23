@@ -1,11 +1,6 @@
 from stockdata import StockData
-import io
-from flask import Flask, render_template, request, Response
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-import matplotlib
-# Avoid UserWarning: Starting a Matplotlib GUI outside of the main thread will likely fail.
-matplotlib.use('agg')
+from plot_config import plot_stock_data
+from flask import Flask, render_template, request
 
 app = Flask('Stock Exchanger', static_folder='static',
             template_folder='template')
@@ -16,15 +11,6 @@ stock_list = ['MSFT', 'TSLA', 'NVDA', 'AAPL',
               'GOOGL', 'AMZN', 'META', 'AMD', 'NFLX']
 stock_dict = dict(zip(company_list, stock_list))
 stock_data = StockData()
-
-
-def plot_stock_data(stock_data):
-
-    fig, ax = plt.subplots(figsize=(10, 4))
-    ax.plot(stock_data['Close'], linewidth=1)
-    ax.set_ylabel('Close Price')
-
-    return fig
 
 
 @app.route('/')
@@ -38,19 +24,20 @@ def stock():
     company = request.form['selection']
     stock = stock_dict[company]  # get value of a business key
     stock_data = StockData(stock)
+    plot_data = plot_stock_data(stock_data.get_close_price(), 'Max')
     return render_template('stock.html', company=company, stock=stock,
                            dataframe_left=stock_data.data.iloc[-14:-7].to_html(),
-                           dataframe_right=stock_data.data.iloc[-7:].to_html())
+                           dataframe_right=stock_data.data.iloc[-7:].to_html(),
+                           plot_data=plot_data)
 
 
 # flask will create the plot when the stock.html is rendered
-@app.route('/stock/plot.png')
-def plot():
+@app.route('/stock/update_plot', methods=['POST'])
+def update_plot():
     global stock_data
-    fig = plot_stock_data(stock_data.get_close_price())
-    output = io.BytesIO()
-    FigureCanvas(fig).print_png(output)
-    return Response(output.getvalue(), mimetype='image/png')
+    time_period = request.form['period']
+    plot_data = plot_stock_data(stock_data.get_close_price(), time_period)
+    return {'plot_data': plot_data}
 
 
 if __name__ == "__main__":
