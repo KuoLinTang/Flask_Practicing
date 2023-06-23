@@ -11,6 +11,7 @@ stock_list = ['MSFT', 'TSLA', 'NVDA', 'AAPL',
               'GOOGL', 'AMZN', 'META', 'AMD', 'NFLX']
 stock_dict = dict(zip(company_list, stock_list))
 stock_data = StockData()
+time_period, measure = '', ''
 
 
 @app.route('/')
@@ -24,20 +25,43 @@ def stock():
     company = request.form['selection']
     stock = stock_dict[company]  # get value of a business key
     stock_data = StockData(stock)
-    plot_data = plot_stock_data(stock_data.get_close_price(), 'Max')
-    return render_template('stock.html', company=company, stock=stock,
+    current_price = stock_data.get_current_price()
+    plot_data = plot_stock_data(stock_data, period='Max', measure='Price')
+    return render_template('stockpage.html',
+                           company=company, stock=stock, current_price=current_price,
                            dataframe_left=stock_data.data.iloc[-14:-7].to_html(),
                            dataframe_right=stock_data.data.iloc[-7:].to_html(),
                            plot_data=plot_data)
 
 
-# flask will create the plot when the stock.html is rendered
-@app.route('/stock/update_plot', methods=['POST'])
-def update_plot():
-    global stock_data
+# update period of plot
+@app.route('/stock/update_plot_period/', methods=['POST'])
+def update_plot_period():
+    global stock_data, time_period, measure
     time_period = request.form['period']
-    plot_data = plot_stock_data(stock_data.get_close_price(), time_period)
+    plot_data = plot_stock_data(
+        stock_data, measure=measure, period=time_period
+    )
     return {'plot_data': plot_data}
+
+
+# update period of plot
+@app.route('/stock/update_plot_measure/', methods=['POST'])
+def update_plot_measure():
+    global stock_data, time_period, measure
+    measure = request.form['measure']
+    plot_data = plot_stock_data(
+        stock_data, measure=measure, period=time_period
+    )
+    return {'plot_data': plot_data, }
+
+
+@app.route('/initialise-variables/', methods=['POST'])
+def initialise_variables():
+    global stock_data, time_period, measure
+    stock_data = StockData()
+    time_period = 'Max'
+    measure = 'Price'
 
 
 if __name__ == "__main__":

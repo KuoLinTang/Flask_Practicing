@@ -15,3 +15,6 @@ class StockData:
 
     def get_volume(self):
         return self.data[['Volume']]
+
+    def get_current_price(self):
+        return float(self.data['Close'].iloc[-1])

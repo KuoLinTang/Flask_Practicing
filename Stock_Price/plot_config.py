@@ -4,11 +4,12 @@ from datetime import datetime
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
+from stockdata import StockData
 # Avoid UserWarning: Starting a Matplotlib GUI outside of the main thread will likely fail.
 matplotlib.use('agg')
 
 
-def slice_data(stock_data, period):
+def slice_data(stock_data, measure, period):
     today = datetime.now()
 
     if period == "1_year":
@@ -19,22 +20,43 @@ def slice_data(stock_data, period):
         start_date = today - pd.DateOffset(months=6)
     elif period == "1_month":
         start_date = today - pd.DateOffset(months=1)
+    elif period == "1_day":
+        current_stock = stock_data.stock_code
+        hourly_data = StockData(current_stock, period='1d', interval='1m')
+        if measure == 'Volume':
+            dataframe_for_plot = hourly_data.get_volume()
+        else:
+            dataframe_for_plot = hourly_data.get_close_price()
+        return dataframe_for_plot
     else:
         # max
-        return stock_data
+        if measure == 'Volume':
+            dataframe_for_plot = stock_data.get_volume()
+        else:
+            dataframe_for_plot = stock_data.get_close_price()
+        return dataframe_for_plot
+
+    if measure == 'Volume':
+        dataframe_for_plot = stock_data.get_volume()
+    else:
+        dataframe_for_plot = stock_data.get_close_price()
 
     start_date = start_date.strftime('%Y-%m-%d')
-    dataframe_for_plot = stock_data[start_date:]
+    dataframe_for_plot = dataframe_for_plot[start_date:]
     return dataframe_for_plot
 
 
-def plot_stock_data(stock_data, period):
+def plot_stock_data(stock_data, measure, period):
 
-    dataframe_for_plot = slice_data(stock_data, period)
+    dataframe_for_plot = slice_data(stock_data, measure, period)
 
-    plt.figure(figsize=(10, 4))
-    plt.plot(dataframe_for_plot['Close'], linewidth=1)
-    plt.ylabel('Close Price')
+    plt.figure(figsize=(14, 4))
+    plt.plot(dataframe_for_plot, linewidth=1)
+
+    if measure == "Price":
+        plt.ylabel('Close Price (USD)')
+    else:
+        plt.ylabel('Volume')
 
     img = io.BytesIO()
     plt.savefig(img, format='png')

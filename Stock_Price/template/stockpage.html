@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Stock Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .center-container {
+            text-align: center;
+        }
+
+        .horizontal-container {
+            display: flex;
+        }
+
+        .left {
+            width: 50%;
+            margin-right: 10px;
+        }
+
+        .right {
+            width: 50%;
+            margin-left: 10px;
+        }
+
+        #backToTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            /* Not display the button at the beginning */
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <button onclick="goBack()" style="margin-left: 20px;">Go Back</button>
+        <div class="center-container">
+
+            <h2>{{company}} Stock Code: {{stock}}</h2>
+            <h3>Current Price: {{ current_price }} USD</h3>
+
+            <hr>
+            <div class="horizontal-container">
+                <div style="width: 5%;">
+                    <button class="update-measure-btn" data-measure="Price" style="display:block;
+                        margin-top: 20px; margin-bottom: 20px; margin-left: 20px; cursor: pointer;">
+                        Price
+                    </button>
+                    <button class="update-measure-btn" data-measure="Volume" style="display:block;
+                        margin-top: 20px; margin-left: 20px; cursor: pointer;">
+                        Volume
+                    </button>
+                </div>
+                <div style="width: 95%;">
+                    <div>
+                        <button class="update-period-btn" data-period="Max" style="cursor: pointer;">Max</button>
+                        <button class="update-period-btn" data-period="2_years" style="cursor: pointer;">2
+                            Years</button>
+                        <button class="update-period-btn" data-period="1_year" style="cursor: pointer;">1 Year</button>
+                        <button class="update-period-btn" data-period="6_months" style="cursor: pointer;">6
+                            Months</button>
+                        <button class="update-period-btn" data-period="1_month" style="cursor: pointer;">1
+                            Month</button>
+                        <button class="update-period-btn" data-period="1_day" style="cursor: pointer;">1 Day</button>
+                    </div>
+                    <img id="line-chart" src="data:image/png;base64,{{ plot_data }}" width="1000" height="300"
+                        alt="Stock Price Line Chart">
+                </div>
+            </div>
+            <hr>
+            <div>
+                <h3>Price for Past 14 Days</h3>
+                <div class="horizontal-container">
+                    <div class="left">
+                        {{dataframe_left | safe}}
+                    </div>
+                    <div class="right">
+                        {{dataframe_right | safe}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="backToTopBtn" onclick="scrollToTop()">Go Top</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
