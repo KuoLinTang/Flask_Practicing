@@ -18,3 +18,6 @@ class StockData:
 
     def get_current_price(self):
         return float(self.data['Close'].iloc[-1])
+
+    def get_data_by_range(self, columns: list = ['High', 'Low', 'Close', 'Volume'], start_index: int = 0, end_index=None):
+        return self.data[columns].iloc[start_index:end_index]

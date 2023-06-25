@@ -29,8 +29,10 @@ def stock():
     plot_data = plot_stock_data(stock_data, period='Max', measure='Price')
     return render_template('stockpage.html',
                            company=company, stock=stock, current_price=current_price,
-                           dataframe_left=stock_data.data.iloc[-14:-7].to_html(),
-                           dataframe_right=stock_data.data.iloc[-7:].to_html(),
+                           table_left=stock_data.get_data_by_range(start_index=-28, end_index=-14).to_html(
+                               classes='data', header=True),
+                           table_right=stock_data.get_data_by_range(start_index=-14).to_html(
+                               classes='data', header=True),
                            plot_data=plot_data)
 
 

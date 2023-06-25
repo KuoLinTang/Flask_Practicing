@@ -36,6 +36,17 @@
             display: none;
             /* Not display the button at the beginning */
         }
+
+        .zebra-table td,
+        .zebra-table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .zebra-table tr:nth-child(even) {
+            background-color: #D6EEEE;
+        }
     </style>
 </head>
 
@@ -49,7 +60,7 @@
 
             <hr>
             <div class="horizontal-container">
-                <div style="width: 5%;">
+                <div style="width: 10%;">
                     <button class="update-measure-btn" data-measure="Price" style="display:block;
                         margin-top: 20px; margin-bottom: 20px; margin-left: 20px; cursor: pointer;">
                         Price
@@ -59,7 +70,7 @@
                         Volume
                     </button>
                 </div>
-                <div style="width: 95%;">
+                <div style="width: 90%;">
                     <div>
                         <button class="update-period-btn" data-period="Max" style="cursor: pointer;">Max</button>
                         <button class="update-period-btn" data-period="2_years" style="cursor: pointer;">2
@@ -80,10 +91,14 @@
                 <h3>Price for Past 14 Days</h3>
                 <div class="horizontal-container">
                     <div class="left">
-                        {{dataframe_left | safe}}
+                        <div class="zebra-table">
+                            {{table_left|safe}}
+                        </div>
                     </div>
                     <div class="right">
-                        {{dataframe_right | safe}}
+                        <div class="zebra-table">
+                            {{table_right|safe}}
+                        </div>
                     </div>
                 </div>
             </div>

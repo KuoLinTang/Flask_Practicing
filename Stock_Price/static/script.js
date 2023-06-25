@@ -53,8 +53,8 @@ window.onscroll = function () { scrollFunction() };
 
 function scrollFunction() {
     var backToTopBtn = document.getElementById("backToTopBtn");
-    // when the page is scrolled over 40 px then the button will appear
-    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    // when the page is scrolled over 100 px then the button will appear
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
         backToTopBtn.style.display = "block";
     } else {
         backToTopBtn.style.display = "none";
