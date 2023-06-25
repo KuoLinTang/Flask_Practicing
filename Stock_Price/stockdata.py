@@ -7,8 +7,15 @@ class StockData:
         self.stock_code = stock_code
         self.period = period
         self.interval = interval
-        self.data = yf.Ticker(stock_code).history(
+        self.raw_data = yf.Ticker(stock_code).history(
             period=period, interval=interval)
+        self.data = self.data_cleaning()
+
+    def data_cleaning(self):
+        data = self.raw_data.copy()
+        data.index.name = None
+        # data = data.asfreq('B')
+        return data
 
     def get_close_price(self):
         return self.data[['Close']]
