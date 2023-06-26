@@ -8,7 +8,7 @@ function goBack() {
     })
 }
 
-// Create a function that allows to update period of plots with button clicked
+// Create a function that allows to update the period of plots when button clicked
 $(document).ready(function () {
     $('.update-period-btn').click(function () {
         var timePeriod = $(this).data('period');
@@ -27,7 +27,7 @@ $(document).ready(function () {
     }
 });
 
-// Create a function that allows to update period of plots with button clicked
+// Create a function that allows to update the measure of plots when button clicked
 $(document).ready(function () {
     $('.update-measure-btn').click(function () {
         var measure = $(this).data('measure');
@@ -41,7 +41,27 @@ $(document).ready(function () {
             data: { measure: measure },
             success: function (data) {
                 $('#line-chart').attr('src', 'data:image/png;base64,' + data.plot_data);
-                $()
+            }
+        });
+    }
+});
+
+// Create a function to update range of the table when button clicked
+$(document).ready(function () {
+    $('.table-page').click(function () {
+        // get page action from button
+        var action = $(this).data('go');
+        updateTableRange(action);
+    });
+
+    function updateTableRange(action) {
+        $.ajax({
+            url: '/stock/update_table/',
+            method: 'POST',
+            data: { action: action },
+            success: function (response) {
+                $('#table-left').html(response.table_left);
+                $('#table-right').html(response.table_right);
             }
         });
     }

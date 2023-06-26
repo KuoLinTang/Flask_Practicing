@@ -91,12 +91,18 @@
                 <h3>Price for Past 28 Business Days</h3>
                 <div class="horizontal-container" style="margin-bottom: 40px">
                     <div class="left">
-                        <div class="zebra-table">
+                        <button class="table-page" data-go="prev">
+                            Prev
+                        </button>
+                        <div id="table-left" class="zebra-table" style="margin-top: 10px;">
                             {{table_left|safe}}
                         </div>
                     </div>
                     <div class="right">
-                        <div class="zebra-table">
+                        <button class="table-page" data-go="next">
+                            Next
+                        </button>
+                        <div id="table-right" class="zebra-table" style="margin-top: 10px;">
                             {{table_right|safe}}
                         </div>
                     </div>

@@ -9,7 +9,7 @@ from stockdata import StockData
 matplotlib.use('agg')
 
 
-def slice_data(stock_data, measure, period):
+def slice_data(stock_data: StockData, measure: str, period: str):
     today = datetime.now()
 
     if period == "1_year":
