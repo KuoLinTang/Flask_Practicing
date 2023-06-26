@@ -29,7 +29,7 @@ def slice_data(stock_data: StockData, measure: str, period: str):
             dataframe_for_plot = hourly_data.get_close_price()
         return dataframe_for_plot
     else:
-        # max
+        # period is MAX
         if measure == 'Volume':
             dataframe_for_plot = stock_data.get_volume()
         else:

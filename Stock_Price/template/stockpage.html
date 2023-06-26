@@ -42,6 +42,7 @@
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
+            width: 100%;
         }
 
         .zebra-table tr:nth-child(even) {
@@ -90,7 +91,7 @@
             <div>
                 <h3>Price for Past 28 Business Days</h3>
                 <div class="horizontal-container" style="margin-bottom: 40px">
-                    <div class="left">
+                    <div class="left" style="align-self: top-center">
                         <button class="table-page" data-go="prev">
                             Prev
                         </button>
@@ -98,7 +99,7 @@
                             {{table_left|safe}}
                         </div>
                     </div>
-                    <div class="right">
+                    <div class="right" style="align-self: top-center">
                         <button class="table-page" data-go="next">
                             Next
                         </button>

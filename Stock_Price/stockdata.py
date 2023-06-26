@@ -17,6 +17,7 @@ class StockData:
 
     def data_cleaning(self):
         data = self.raw_data.copy()
+        # data.index = data.index.date  # set datetime index to date index
         data.index.name = None
         return data
 
@@ -28,13 +29,13 @@ class StockData:
         return self.data[['Volume']]
 
     # data for displaying tables
-    def get_table_data(self, columns: list = ['High', 'Low', 'Close', 'Volume']):
+    def get_table_data(self, columns: list = ['Open', 'Close', 'Volume']):
         if self.current_table_page == 1:
             return self.data[columns].iloc[-(StockData.len_table*self.current_table_page):]
         else:
             return self.data[columns].iloc[-(StockData.len_table*self.current_table_page):-(StockData.len_table*(self.current_table_page-1))]
 
-    def update_table_data(self, columns: list = ['High', 'Low', 'Close', 'Volume'], action: str = 'prev'):
+    def update_table_data(self, columns: list = ['Open', 'Close', 'Volume'], action: str = 'prev'):
         if action == 'prev':
             if self.max_table_page > self.current_table_page:
                 self.current_table_page += 1

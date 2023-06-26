@@ -26,7 +26,8 @@ def stock():
     stock = stock_dict[company]  # get value of a business key
     stock_data = StockData(stock)
     current_price = stock_data.get_current_price()
-    plot_data = plot_stock_data(stock_data, period='Max', measure='Price')
+    plot_data = plot_stock_data(
+        stock_data, period='Max', measure='Price')
     table_data = stock_data.get_table_data()
     return render_template('stockpage.html',
                            company=company, stock=stock, current_price=f'{current_price:.6f}',
