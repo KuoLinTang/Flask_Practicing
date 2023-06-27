@@ -85,6 +85,7 @@ def initialise_variables():
     stock_data = StockData()
     time_period = 'Max'
     measure = 'Price'
+    return {}
 
 
 if __name__ == "__main__":
