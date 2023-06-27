@@ -26,16 +26,18 @@ def stock():
     stock = stock_dict[company]  # get value of a business key
     stock_data = StockData(stock)
     current_price = stock_data.get_current_price()
-    plot_data = plot_stock_data(
+    plot_data, first_close_price = plot_stock_data(
         stock_data, period='Max', measure='Price')
     table_data = stock_data.get_table_data()
+    # calculate price percentage diff
+    price_diff = (current_price - first_close_price) / first_close_price
     return render_template('stockpage.html',
-                           company=company, stock=stock, current_price=f'{current_price:.6f}',
+                           company=company, stock=stock, current_price=f'{current_price:5.4f}',
                            table_left=table_data.iloc[-28:-14].to_html(
                                classes='data', header=True),
                            table_right=table_data.iloc[-14:].to_html(
                                classes='data', header=True),
-                           plot_data=plot_data)
+                           plot_data=plot_data, price_diff=f'{price_diff:8.4%}')
 
 
 # update period of plot
@@ -43,10 +45,13 @@ def stock():
 def update_plot_period():
     global stock_data, time_period, measure
     time_period = request.form['period']
-    plot_data = plot_stock_data(
+    current_price = stock_data.get_current_price()
+    plot_data, first_close_price = plot_stock_data(
         stock_data, measure=measure, period=time_period
     )
-    return {'plot_data': plot_data}
+    # calculate price percentage diff
+    price_diff = (current_price - first_close_price) / first_close_price
+    return {'plot_data': plot_data, 'price_diff': f'{price_diff:8.4%}', 'current_price': f'{current_price:5.4f}'}
 
 
 # update period of plot
@@ -54,10 +59,13 @@ def update_plot_period():
 def update_plot_measure():
     global stock_data, time_period, measure
     measure = request.form['measure']
-    plot_data = plot_stock_data(
+    current_price = stock_data.get_current_price()
+    plot_data, first_close_price = plot_stock_data(
         stock_data, measure=measure, period=time_period
     )
-    return {'plot_data': plot_data}
+    # calculate price percentage diff
+    price_diff = (current_price - first_close_price) / first_close_price
+    return {'plot_data': plot_data, 'price_diff': f'{price_diff:8.4%}', 'current_price': f'{current_price:5.4f}'}
 
 
 # update range of table

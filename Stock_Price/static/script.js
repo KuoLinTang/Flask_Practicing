@@ -20,8 +20,10 @@ $(document).ready(function () {
             url: '/stock/update_plot_period/',
             method: 'POST',
             data: { period: period },
-            success: function (data) {
-                $('#line-chart').attr('src', 'data:image/png;base64,' + data.plot_data);
+            success: function (response) {
+                $('#line-chart').attr('src', 'data:image/png;base64,' + response.plot_data);
+                $('#current-price').text('Current Price: ' + response.current_price);
+                $('#price-diff').text('Gain: ' + response.price_diff);
             }
         });
     }
@@ -39,8 +41,10 @@ $(document).ready(function () {
             url: '/stock/update_plot_measure/',
             method: 'POST',
             data: { measure: measure },
-            success: function (data) {
-                $('#line-chart').attr('src', 'data:image/png;base64,' + data.plot_data);
+            success: function (response) {
+                $('#line-chart').attr('src', 'data:image/png;base64,' + response.plot_data);
+                $('#current-price').text('Current Price: ' + response.current_price);
+                $('#price-diff').text('Gain: ' + response.price_diff);
             }
         });
     }
@@ -61,7 +65,7 @@ $(document).ready(function () {
             data: { action: action },
             success: function (response) {
                 $('#table-left').html(response.table_left);
-                $('#table-right').html(response.table_right);
+                $('#table-right').text(response.table_right);
             }
         });
     }

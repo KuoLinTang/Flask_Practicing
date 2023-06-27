@@ -9,6 +9,7 @@ from stockdata import StockData
 matplotlib.use('agg')
 
 
+# get data for plotting and the first close price within that period
 def slice_data(stock_data: StockData, measure: str, period: str):
     today = datetime.now()
 
@@ -25,16 +26,18 @@ def slice_data(stock_data: StockData, measure: str, period: str):
         hourly_data = StockData(current_stock, period='1d', interval='1m')
         if measure == 'Volume':
             dataframe_for_plot = hourly_data.get_volume()
+            return dataframe_for_plot, float(hourly_data.get_close_price()['Close'].iloc[0])
         else:
             dataframe_for_plot = hourly_data.get_close_price()
-        return dataframe_for_plot
+            return dataframe_for_plot, float(dataframe_for_plot['Close'].iloc[0])
     else:
         # period is MAX
         if measure == 'Volume':
             dataframe_for_plot = stock_data.get_volume()
+            return dataframe_for_plot, float(stock_data.get_close_price()['Close'].iloc[0])
         else:
             dataframe_for_plot = stock_data.get_close_price()
-        return dataframe_for_plot
+            return dataframe_for_plot, float(dataframe_for_plot['Close'].iloc[0])
 
     if measure == 'Volume':
         dataframe_for_plot = stock_data.get_volume()
@@ -43,12 +46,14 @@ def slice_data(stock_data: StockData, measure: str, period: str):
 
     start_date = start_date.strftime('%Y-%m-%d')
     dataframe_for_plot = dataframe_for_plot[start_date:]
-    return dataframe_for_plot
+
+    return dataframe_for_plot, float(stock_data.get_close_price()[start_date:]['Close'].iloc[0])
 
 
 def plot_stock_data(stock_data, measure, period):
 
-    dataframe_for_plot = slice_data(stock_data, measure, period)
+    dataframe_for_plot, first_close_price = slice_data(
+        stock_data, measure, period)
 
     plt.figure(figsize=(14, 4))
     plt.plot(dataframe_for_plot, linewidth=1)
@@ -64,4 +69,4 @@ def plot_stock_data(stock_data, measure, period):
     plot_data = base64.b64encode(img.getvalue()).decode('utf-8')
     plt.close()
 
-    return plot_data
+    return plot_data, first_close_price
