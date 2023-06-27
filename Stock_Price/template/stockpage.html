@@ -80,6 +80,8 @@
                         <button class="update-period-btn" data-period="1_year" style="cursor: pointer;">1 Year</button>
                         <button class="update-period-btn" data-period="6_months" style="cursor: pointer;">6
                             Months</button>
+                        <button class="update-period-btn" data-period="3_months" style="cursor: pointer;">3
+                            Months</button>
                         <button class="update-period-btn" data-period="1_month" style="cursor: pointer;">1
                             Month</button>
                         <button class="update-period-btn" data-period="1_day" style="cursor: pointer;">1 Day</button>
@@ -92,19 +94,19 @@
             <div>
                 <h3>Price for Past 28 Business Days</h3>
                 <div class="horizontal-container" style="margin-bottom: 40px">
-                    <div class="left" style="align-self: top-center">
-                        <button class="table-page" data-go="prev">
+                    <div class="left">
+                        <button class="table-page" data-go="prev" style="margin-bottom: 10px;">
                             Prev
                         </button>
-                        <div id="table-left" class="zebra-table" style="margin-top: 10px;">
+                        <div id="table-left" class="zebra-table">
                             {{table_left|safe}}
                         </div>
                     </div>
-                    <div class="right" style="align-self: top-center">
-                        <button class="table-page" data-go="next">
+                    <div class="right">
+                        <button class="table-page" data-go="next" style="margin-bottom: 10px;">
                             Next
                         </button>
-                        <div id="table-right" class="zebra-table" style="margin-top: 10px;">
+                        <div id="table-right" class="zebra-table">
                             {{table_right|safe}}
                         </div>
                     </div>

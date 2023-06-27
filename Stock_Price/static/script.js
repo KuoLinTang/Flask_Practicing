@@ -22,7 +22,7 @@ $(document).ready(function () {
             data: { period: period },
             success: function (response) {
                 $('#line-chart').attr('src', 'data:image/png;base64,' + response.plot_data);
-                $('#current-price').text('Current Price: ' + response.current_price);
+                $('#current-price').text('Current Price: ' + response.current_price + ' USD');
                 $('#price-diff').text('Gain: ' + response.price_diff);
             }
         });
@@ -43,7 +43,7 @@ $(document).ready(function () {
             data: { measure: measure },
             success: function (response) {
                 $('#line-chart').attr('src', 'data:image/png;base64,' + response.plot_data);
-                $('#current-price').text('Current Price: ' + response.current_price);
+                $('#current-price').text('Current Price: ' + response.current_price + ' USD');
                 $('#price-diff').text('Gain: ' + response.price_diff);
             }
         });
@@ -65,7 +65,7 @@ $(document).ready(function () {
             data: { action: action },
             success: function (response) {
                 $('#table-left').html(response.table_left);
-                $('#table-right').text(response.table_right);
+                $('#table-right').html(response.table_right);
             }
         });
     }

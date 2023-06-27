@@ -19,16 +19,18 @@ def slice_data(stock_data: StockData, measure: str, period: str):
         start_date = today - pd.DateOffset(years=2)
     elif period == "6_months":
         start_date = today - pd.DateOffset(months=6)
+    elif period == "3_months":
+        start_date = today - pd.DateOffset(months=3)
     elif period == "1_month":
         start_date = today - pd.DateOffset(months=1)
     elif period == "1_day":
         current_stock = stock_data.stock_code
-        hourly_data = StockData(current_stock, period='1d', interval='1m')
+        minute_data = StockData(current_stock, period='1d', interval='1m')
         if measure == 'Volume':
-            dataframe_for_plot = hourly_data.get_volume()
-            return dataframe_for_plot, float(hourly_data.get_close_price()['Close'].iloc[0])
+            dataframe_for_plot = minute_data.get_volume()
+            return dataframe_for_plot, float(minute_data.get_close_price()['Close'].iloc[0])
         else:
-            dataframe_for_plot = hourly_data.get_close_price()
+            dataframe_for_plot = minute_data.get_close_price()
             return dataframe_for_plot, float(dataframe_for_plot['Close'].iloc[0])
     else:
         # period is MAX
