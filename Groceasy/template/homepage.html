@@ -4,14 +4,65 @@
 <head>
     <meta charset="utf-8" />
     <title>Homepage</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .container>div {
+            flex-basis: 33.33%;
+            background-color: lightgray;
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body>
     <div>
-        <form>
-            <input type="text" id="item_name" name="item_name" placeholder="Search Groceries...">
-            <button class="submit-grocery">Submit</button>
-        </form>
+        <div style="text-align: center;">
+            <h3>
+                Welcome to Groceasy!
+            </h3>
+            <form action="/scrap_items/" method="post">
+                <input type="text" id="item_name" name="item_name" placeholder="Search Groceries...">
+                <button class="submit-grocery">Submit</button>
+            </form>
+        </div>
+        <br>
+        <div class="container" style="text-align: center;">
+            <div>
+                <table>
+                    <th>
+                        "ASDA"
+                    </th>
+                    <tr>
+                        <td>1</td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table>
+                    <th>
+                        "Sainsbury"
+                    </th>
+                    <tr>
+                        <td>2</td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table>
+                    <th>
+                        "Tesco"
+                    </th>
+                    <tr>
+                        <td>3</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </body>
 

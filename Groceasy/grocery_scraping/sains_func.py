@@ -73,7 +73,7 @@ def fetch_top_items(driver: webdriver, n: int):
 def sainsbury(item: str = 'milk', n: int = 5):
 
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--ignore-certificate-errors')
+    chrome_options.add_argument('log-level=3')
     # not opening a browser while avoiding being detected
     chrome_options.add_argument('--headless=new')
     chrome_options.add_argument(
