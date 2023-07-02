@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
-from grocery_scraping import asda_func, sains_func, tesco_func
+from grocery_scraping import asda_func, sains_func, tesco_func, all_in_one
 from itemdata import ItemData
+from multiprocessing import Pool
 
 app = Flask('Stock Exchanger', static_folder='static',
             template_folder='template')
@@ -20,13 +21,14 @@ def scrap_items():
 
         print(item_name)
         n = 10
-        asda_list = [ItemData(*i) for i in asda_func.asda(item=item_name, n=n)]
-        sains_list = [ItemData(*i)
-                      for i in sains_func.sainsbury(item=item_name, n=n)]
-        tesco_list = [ItemData(*i)
-                      for i in tesco_func.tesco(item=item_name, n=n)]
+        grocery_store = ['asda', 'sainsbury', 'tesco']
 
-        print(asda_list[0].name)
+        # multiprocessing the web scraping process
+        with Pool() as p:
+            result_list = p.starmap(all_in_one.get_items, zip(
+                [item_name]*3, [n]*3, grocery_store))
+
+        print(result_list[0])
 
 
 if __name__ == "__main__":
