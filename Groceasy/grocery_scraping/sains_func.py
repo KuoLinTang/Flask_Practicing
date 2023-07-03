@@ -87,7 +87,7 @@ def sainsbury(item: str = 'milk', n: int = 5):
     accept_privacy_term(browser, term_accept_xpath)
     search_item(browser, search_bar_xpath, item)
     results = fetch_top_items(browser, n=n)
-    results = [(i[0][0], i[0][1], i[1], i[2]) for i in results]
+    results = [(i[0][0], i[0][1], i[1], i[2], None) for i in results]
 
     browser.quit()
 
