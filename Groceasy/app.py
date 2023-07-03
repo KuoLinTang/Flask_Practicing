@@ -28,7 +28,24 @@ def scrap_items():
             result_list = p.starmap(all_in_one.get_items, zip(
                 [item_name]*3, [n]*3, grocery_store))
 
-        print(result_list[0])
+        ItemData_list = []
+        for i in range(len(grocery_store)):
+            for j in result_list[i]:
+                ItemData_list.append(
+                    ItemData(
+                        business=grocery_store[i],
+                        name=j[0],
+                        volume=j[1],
+                        price=j[2],
+                        unit_price=j[3],
+                        img=j[4]
+                    )
+                )
+
+        print(ItemData_list[0].business,
+              ItemData_list[0].name, ItemData_list[0].price)
+
+        return 0
 
 
 if __name__ == "__main__":
