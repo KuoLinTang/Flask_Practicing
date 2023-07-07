@@ -28,39 +28,51 @@
             </h3>
             <form action="/scrap_items/" method="post">
                 <input type="text" id="item_name" name="item_name" placeholder="Search Groceries...">
-                <button class="submit-grocery">Submit</button>
+                <button class="submit-grocery" type="submit">Submit</button>
             </form>
         </div>
         <br>
         <div class="container" style="text-align: center;">
             <div>
-                <table>
-                    <th>
+                <table id="asda_results">
+                    <thead>
                         "ASDA"
-                    </th>
-                    <tr>
-                        <td>1</td>
-                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in asda_list %}
+                        <tr>
+                            <td>{{ item }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
             </div>
             <div>
-                <table>
-                    <th>
+                <table id="sains_results">
+                    <thead>
                         "Sainsbury"
-                    </th>
-                    <tr>
-                        <td>2</td>
-                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in sains_list %}
+                        <tr>
+                            <td>{{ item }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
             </div>
             <div>
-                <table>
-                    <th>
+                <table id="tesco_results">
+                    <thead>
                         "Tesco"
-                    </th>
-                    <tr>
-                        <td>3</td>
-                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in tesco_list %}
+                        <tr>
+                            <td>{{ item }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
             </div>
         </div>
