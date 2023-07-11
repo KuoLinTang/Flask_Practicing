@@ -1,59 +1,53 @@
-function processForm(event) {
-    event.preventDefault();  // 防止表單提交後頁面重新加載
+$(document).ready(function () {
+    $('.submit-item-name').click(function () {
+        var item_name = $('#item-name').val();
+        updateTables(item_name);
+    });
 
-    // 提交表單
-    const inputText = document.querySelector('input[name="item_name"]').value;
-    const formData = new FormData();
-    formData.append('input_text', inputText);
-
-    fetch('/scrap_items/', {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => response.json())  // 從Response中提取json格式的資料
-        .then(data => {
-            const asdaTable = document.getElementById('asda_results');
-            const sainsTable = document.getElementById('sains_results');
-            const tescoTable = document.getElementById('tesco_results');
-            asdaTable.innerHTML = '';  // 清空表格內容
-            sainsTable.innerHTML = '';  // 清空表格內容
-            tescoTable.innerHTML = '';  // 清空表格內容
-
-            const asda_list = data.businesses[0];
-            const sains_list = data.businesses[1];
-            const tesco_list = data.businesses[2];
-
-            function attribute_to_table(table, item_list) {
-
-                // 動態生成表格行
-                const thead = document.createElement('thead');
-                thead.textContent = result['business'];
-                table.appendChild(thead);
-
-                const tbody = document.createElement('tbody');
-                for (const result of item_list) {
-                    const row = document.createElement('tr');
-                    const cell1 = document.createElement('td');
-                    const cell2 = document.createElement('td');
-                    const cell3 = document.createElement('td');
-                    const cell4 = document.createElement('td');
-                    cell1.textContent = result['name'];
-                    cell2.textContent = result['volume'];
-                    cell3.textContent = result['price'];
-                    cell4.textContent = result['unit_price'];
-                    row.appendChild(cell1);
-                    row.appendChild(cell2);
-                    row.appendChild(cell3);
-                    row.appendChild(cell4);
-                    tbody.appendChild(row);
-                }
-                table.appendChild(tbody);
+    function updateTables(item_name) {
+        $.ajax({
+            url: '/scrap_items/',
+            method: 'POST',
+            data: { item_name: item_name },
+            success: function (response) {
+                console.log('get response');
+                displayData(response);
             }
+        });
+    }
+});
 
-            attribute_to_table(asdaTable, asda_list);
-            attribute_to_table(sainsTable, sains_list);
-            attribute_to_table(tescoTable, tesco_list);
+function displayData(data) {
+    var asdaTable = $('#asda_results');
+    var sainsTable = $('#sains_results');
+    var tescoTable = $('#tesco_results');
+    console.log('get table');
 
-        })
-        .catch(error => console.error(error));
+    var asda_list = data.asda_result;
+    var sains_list = data.sains_result;
+    var tesco_list = data.tesco_result;
+    console.log('get result');
+    console.log(asda_list);
+
+    tableInsert(asda_list, asdaTable, 'ASDA');
+    tableInsert(sains_list, sainsTable, 'Sainsbury');
+    tableInsert(tesco_list, tescoTable, 'Tesco');
+    console.log('update table');
+}
+
+function tableInsert(data, table, company) {
+    table.empty();
+    table.append($('<thead>').text(company));
+
+    var tbody = $('<tbody>');
+    // 使用迴圈將數據插入表格中
+    for (var i = 0; i < data.length; i++) {
+        var row = $('<tr>');
+        row.append($('<td>').text(data['name']));
+        row.append($('<td>').text(data['price']));
+        row.append($('<td>').text(data['unit_price']));
+        row.append($('<td>').text(data['volume']));
+        tbody.append(row);
+    }
+    table.append(tbody);
 }
