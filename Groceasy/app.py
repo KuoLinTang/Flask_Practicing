@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, Response
 from grocery_scraping import asda_func, sains_func, tesco_func, all_in_one
 from itemdata import ItemData
 from multiprocessing.dummy import Pool as ThreadPool
@@ -8,19 +8,12 @@ app = Flask('Stock Exchanger', static_folder='static',
             template_folder='template')
 
 
-class MyEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, ItemData):
-            return obj.__dict__  # 將自定義物件轉換為字典
-        return super().default(obj)
-
-
 @app.route('/')
 def home():
     return render_template('homepage.html')
 
 
-@app.route('/scrap_items/', methods=["POST", "GET"])
+@app.route('/scrap_items/', methods=["POST"])
 def scrap_items():
 
     def list_to_object(item_list, business):
@@ -40,6 +33,7 @@ def scrap_items():
         return result_list
 
     item_name = request.form['item_name']
+    print(item_name)
 
     if item_name != None and len(item_name) > 0:
 
@@ -56,22 +50,22 @@ def scrap_items():
         # tesco_list = list_to_object(result_list[0], 'tesco')
 
         # business_list = [[o.to_json() for o in asda_list], [o.to_json() for o in sains_list], [o.to_json() for o in tesco_list]]
-        business_list = [[ItemData('asda', 'milk', '1L', '2.5', '1').to_json(),
-                          ItemData('asda', 'bacon', '1g', '2.5', '1').to_json()],
-                         [ItemData('sainsbury', 'milk', '1L', '2.5', '1').to_json(),
-                          ItemData('sainsbury', 'bacon', '1g', '2.5', '1').to_json()],
-                         [ItemData('tesco', 'milk', '1L', '2.5', '1').to_json(),
-                          ItemData('tesco', 'bacon', '1g', '2.5', '1').to_json()]]
-        business_list = [[ItemData('asda', 'milk', '1L', '2.5', '1'),
-                          ItemData('asda', 'bacon', '1g', '2.5', '1')],
-                         [ItemData('sainsbury', 'milk', '1L', '2.5', '1'),
-                          ItemData('sainsbury', 'bacon', '1g', '2.5', '1')],
-                         [ItemData('tesco', 'milk', '1L', '2.5', '1'),
-                          ItemData('tesco', 'bacon', '1g', '2.5', '1')]]
-        encoded_result = json.dumps(business_list, cls=MyEncoder)
+        asda_list = [ItemData('asda', 'milk', '1L', '2.5', '1'),
+                     ItemData('asda', 'bacon', '1g', '2.5', '1')]
+        sains_list = [ItemData('sainsbury', 'milk', '1L', '2.5', '1'),
+                      ItemData('sainsbury', 'bacon', '1g', '2.5', '1')]
+        tesco_list = [ItemData('tesco', 'milk', '1L', '2.5', '1'),
+                      ItemData('tesco', 'bacon', '1g', '2.5', '1')]
+        enc_asda = [i.__dict__ for i in asda_list]
+        enc_sains = [i.__dict__ for i in sains_list]
+        enc_tesco = [i.__dict__ for i in tesco_list]
 
-        return encoded_result, 200, {'Content-Type': 'application/json'}
-        # return jsonify(businesses=business_list)
+        # response = Response(json.dumps(
+        #     {'asda_list': enc_asda, 'sains_list': enc_sains, 'tesco_list': enc_tesco}),
+        #     content_type='application/json')
+
+        # return response
+        return jsonify(asda_result=enc_asda, sains_result=enc_sains, tesco_result=enc_tesco)
 
 
 if __name__ == "__main__":
