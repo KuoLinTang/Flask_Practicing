@@ -16,9 +16,24 @@
             background-color: lightgray;
             padding: 10px;
         }
+
+        #loadingSpinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #invalidItem {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../static/script.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
 
 <body>
@@ -27,10 +42,18 @@
             <h3>
                 Welcome to Groceasy!
             </h3>
-            <input type="text" id="item-name" placeholder="Search Groceries...">
-            <button class="submit-item-name">Submit</button>
+            <form id="item-input-form">
+                <input type="text" id="item-name" placeholder="Search Groceries...">
+                <button id="submit-button">Submit</button>
+            </form>
         </div>
         <br>
+        <div id="loadingSpinner" style="display: none;">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <div id="invalidItem" style="display: none;">
+            <h3>Invalid Inputed Item</h3>
+        </div>
         <div class="container" style="text-align: center;">
             <div>
                 <table id="asda_results">
