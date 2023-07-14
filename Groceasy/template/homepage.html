@@ -15,6 +15,17 @@
             flex-basis: 33.33%;
             background-color: lightgray;
             padding: 10px;
+            position: relative;
+        }
+
+        .container>div::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 100%;
+            width: 1px;
+            background-color: gray;
         }
 
         #loadingSpinner {
@@ -52,7 +63,7 @@
             <i class="fas fa-spinner fa-spin"></i>
         </div>
         <div id="invalidItem" style="display: none;">
-            <h3>Invalid Inputed Item</h3>
+            <h3>Invalid Item Name</h3>
         </div>
         <div class="container" style="text-align: center;">
             <div>

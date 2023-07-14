@@ -14,30 +14,30 @@ $(document).ready(function () {
 });
 
 function updateTables() {
-    showLoadingSpinner();  // display loading spinner
     var item_name = $('#item-name').val();  // Get item name from the input box
 
     $.ajax({
         url: '/scrap_items/',
         method: 'POST',
         data: { item_name: item_name },
+        beforeSend: function () {
+            hideInvalidItem();
+            showLoadingSpinner(); // 请求发送前显示加载图标
+        },
         success: function (response, textStatus, xhr) {
 
-            var status_code = xhr.status_code;
-
             console.log('get responses');
+            console.log(textStatus);
             hideLoadingSpinner();  // hide loading spinner
-            console.log(status_code);
 
-            if (status_code === 200) {
-                displayData(response);
-            } else {
-                throw 'Undefined status code';
-            }
+            displayData(response);
         },
-        error: function (error) {
+        error: function (xhr, textStatus, error) {
             hideLoadingSpinner();
-            console.log(error);
+            showInvalidItem();
+
+            // 执行错误的逻辑
+            console.log('Error:', textStatus, error);
         }
     });
 }
@@ -83,4 +83,12 @@ function showLoadingSpinner() {
 
 function hideLoadingSpinner() {
     $('#loadingSpinner').hide(); // 隐藏加载图标
+}
+
+function showInvalidItem() {
+    $('#invalidItem').show(); // 显示加载图标
+}
+
+function hideInvalidItem() {
+    $('#invalidItem').hide(); // 隐藏加载图标
 }
