@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <title>Groceasy</title>
+    <link rel="stylesheet" type="text/css" href="../static/css-selectors.css" />
+</head>
+
+<body>
+    <div class="title-bar">
+        <div class="title-left">Welcome to Groceasy!</div>
+        <div class="title-right">
+            <img class="icon" id="download-icon" alt="Download" title="Download all data"
+                src="../static/img/icons8-download-48.png" width="30px" height="30px" />
+            <img onclick="clearAll();" id="clear-icon" alt="Clear and restart" title="Clear all entered values"
+                src="../static/img/icons8-restart-50.png" width="30px" height="30px" />
+        </div>
+    </div>
+    <div class="form">
+        <div class="form-inner">
+            <label for="business">Choose a business:</label>
+            <select required id="business">
+                <option value="" disabled selected hidden>...</option>
+                <option value="asda">ASDA</option>
+                <option value="sainsbury">Sainsbury</option>
+                <option value="tesco">Tesco</option>
+            </select>
+        </div>
+        <div class="form-inner">
+            <input type="text" id="item-id" name="item-name" placeholder="Enter an item">
+        </div>
+        <button>Submit</button>
+    </div>
+    <div class="item-list">
+        <div class="item">Item 1</div>
+        <div class="item">Item 2</div>
+        <div class="item">Item 3</div>
+        <div class="item">Item 4</div>
+    </div>
+
+    <script>
+        function clearAll() {
+            let selectElem = document.querySelector('#business');
+            let inputElem = document.querySelector('#item-id');
+            selectElem.value = "";
+            inputElem.value = "";
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+.title-bar {
+    display: flex;
+}
+
+.title-left {
+    flex: auto;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.title-right {
+    margin-right: 20px;
+}
+
+.icon {
+    margin-right: 10px;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 90px;
+}
+
+select:invalid {
+    color: gray;
+}
+
+.form-inner {
+    margin: 10px;
+}
+
+.item-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.item {
+    flex: none;
+    width: 25%;
+}
+
+@media(max-width:800px) {
+    .item {
+        width: 33%;
+    }
+}
