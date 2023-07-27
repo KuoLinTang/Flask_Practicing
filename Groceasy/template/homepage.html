@@ -35,43 +35,12 @@
             <button onclick="submit();">Submit</button>
         </div>
         <div class="warnings" id="warn"></div>
+        <hr />
     </div>
-    <div class="item-list">
-        <div class="item">Item 1</div>
-        <div class="item">Item 2</div>
-        <div class="item">Item 3</div>
-        <div class="item">Item 4</div>
-    </div>
+    <div style="text-align: center; margin-right: 90px;" id="item-num"></div>
+    <div class="item-list" id="item-fetched"></div>
 
-    <script>
-        function clearAll() {
-            let selectElem = document.querySelector('#business');
-            let inputElem = document.querySelector('#item-name');
-            selectElem.value = "";
-            inputElem.value = "";
-        };
-
-        function submit() {
-            let selectElem = document.querySelector('#business');
-            let inputElem = document.querySelector('#item-name');
-            let warnElem = document.querySelector('#warn');
-
-            if (selectElem.value == "" && inputElem.value == "") {
-                warnElem.textContent = 'Please select a grocery store and enter an item.';
-                warnElem.style.display = 'block';
-            } else if (selectElem.value != "" && inputElem.value == "") {
-                warnElem.textContent = 'Please enter an item.';
-                warnElem.style.display = 'block';
-            } else if (selectElem.value == "" && inputElem.value != "") {
-                warnElem.textContent = 'Please select a grocery store.';
-                warnElem.style.display = 'block';
-            } else {
-                warnElem.style.display = 'none';
-                fetch()
-                    .then()
-            };
-        };
-    </script>
+    <script src="../static/functions.js"></script>
 </body>
 
 </html>
