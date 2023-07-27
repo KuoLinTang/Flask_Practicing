@@ -10,3 +10,8 @@ class ItemData:
         self.price = price
         self.unit_price = unit_price
         self.img = img
+
+
+if __name__ == "__main__":
+    obj = ItemData('tesco', 'milk', '1L', '20p', '20p', 'image')
+    print(obj.__dict__)
