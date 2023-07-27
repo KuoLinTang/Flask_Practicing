@@ -84,3 +84,7 @@ def asda(item: str = 'milk', n: int = 5):
     browser.quit()
 
     return results
+
+
+if __name__ == "__main__":
+    print(asda('frozen', n=20))
