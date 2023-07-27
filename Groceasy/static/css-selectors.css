@@ -1,3 +1,7 @@
+body {
+    padding: 10px;
+}
+
 .title-bar {
     display: flex;
 }
@@ -22,6 +26,15 @@
     align-items: center;
     justify-content: center;
     margin-right: 90px;
+    flex-wrap: wrap;
+}
+
+.warnings {
+    display: none;
+    color: #FF0000;
+    font-weight: bold;
+    text-align: center;
+    margin-right: 90px;
 }
 
 select:invalid {
@@ -43,8 +56,20 @@ select:invalid {
     width: 25%;
 }
 
-@media(max-width:800px) {
+@media(max-width:760px) {
     .item {
         width: 33%;
+    }
+}
+
+@media(max-width:620px) {
+    .title-left {
+        font-size: 25px;
+    }
+}
+
+@media(max-width:550px) {
+    .item {
+        width: 45%;
     }
 }
