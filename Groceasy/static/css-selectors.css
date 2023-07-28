@@ -54,7 +54,9 @@ select:invalid {
 .item {
     border: 2px groove #C0C0C0;
     border-radius: 10px;
+    background-color: #E0FFFF;
     margin: 10px;
+    padding: 5px;
     flex: none;
     width: 18%;
 }

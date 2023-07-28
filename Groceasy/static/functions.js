@@ -14,13 +14,13 @@ function submit() {
     let inputElem = document.querySelector('#item-name');
     let warnElem = document.querySelector('#warn');
 
-    let [business, item] = [selectElem.value, inputElem.value];
+    let [business, item] = [selectElem.value, inputElem.value.trim()];
 
     if (business == "" && item == "") {
-        warnElem.textContent = 'Please select a grocery store and enter an item.';
+        warnElem.textContent = 'Please select a grocery store and enter a valid item.';
         warnElem.style.display = 'block';
     } else if (business != "" && item == "") {
-        warnElem.textContent = 'Please enter an item.';
+        warnElem.textContent = 'Please enter a valid item.';
         warnElem.style.display = 'block';
     } else if (business == "" && item != "") {
         warnElem.textContent = 'Please select a grocery store.';
@@ -47,7 +47,10 @@ function submit() {
 
                 for (let i = 0; i < numItem; i++) {
                     let item = data[i];
-                    divElem.innerHTML += '<div class="item"><div class="prop-item">' +
+                    divElem.innerHTML += '<div onclick="jumpToComparison(this);"' +
+                        'onmouseover="over(this);"' +
+                        'onmouseout="out(this);"' +
+                        'class="item"><div class="prop-item">' +
                         '<img width="130px" height="130px" src="' +
                         item.img + '"/></div><div class="prop-item" style="font-weight: bold;">' +
                         item.name + '</div><div class="prop-item">' +
@@ -61,4 +64,31 @@ function submit() {
 
         })
     };
+};
+
+function over(elem) {
+    elem.style.backgroundColor = '#B3D9D9';
+}
+
+function out(elem) {
+    elem.style.backgroundColor = '#E0FFFF';
+}
+
+function jumpToComparison(elem) {
+    let selectElem = document.querySelector('#business');
+    let business = selectElem.value;
+    let item = elem.childNodes[1].innerText;
+    let item_cleaned = item.replace(business, "").trim();
+
+    fetch('/get-item/compare/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 'item': item_cleaned })
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+    })
 };
