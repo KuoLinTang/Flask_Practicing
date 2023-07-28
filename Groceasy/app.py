@@ -15,28 +15,13 @@ def home():
 @app.route('/get-item/', methods=['POST'])
 def get_item():
 
-    def list_to_object(item_list, business):
-        result_list = []
-        for i in item_list:
-            result_list.append(
-                ItemData(
-                    business=business,
-                    name=i[0],
-                    volume=i[1],
-                    price=i[2],
-                    unit_price=i[3],
-                    img=i[4]
-                ).__dict__  # convert into JSON
-            )
-        return result_list
-
     data = request.json
     business = data['business']
     item = data['item']
 
     try:
-        results = all_in_one.get_items(item=item, n=20, business=business)
-        list_objs = list_to_object(results, business=business)
+        results = all_in_one.get_items(item=item, n=30, business=business)
+        list_objs = ItemData.list_to_object(results, business=business)
 
     except Exception as e:
         print(e)
@@ -44,6 +29,22 @@ def get_item():
 
     finally:
         return list_objs
+
+
+@app.route('/get-item/compare/', methods=['POST'])
+def compare():
+
+    data = request.json
+    item = data['item']
+
+    item_list_dict = all_in_one.get_all_businesses(item=item, n=10)
+
+    item_obj_dict = {}
+    for k, v in item_list_dict.items():
+        print(k)
+        item_obj_dict[k] = ItemData.list_to_object(v, k)
+
+    return item_obj_dict
 
 
 if __name__ == '__main__':
