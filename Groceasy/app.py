@@ -44,7 +44,8 @@ def compare():
         print(k)
         item_obj_dict[k] = ItemData.list_to_object(v, k)
 
-    return item_obj_dict
+    return render_template('comparison.html')
+    # return item_obj_dict  # should return a new page
 
 
 if __name__ == '__main__':
