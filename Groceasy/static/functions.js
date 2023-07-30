@@ -9,7 +9,8 @@ function clearAll() {
     divElement.innerHTML = "";
 };
 
-function submit() {
+function submit(elem) {
+    let loaderElem = document.querySelector('#loader');
     let selectElem = document.querySelector('#business');
     let inputElem = document.querySelector('#item-name');
     let warnElem = document.querySelector('#warn');
@@ -27,6 +28,12 @@ function submit() {
         warnElem.style.display = 'block';
     } else {
         warnElem.style.display = 'none';
+        loaderElem.style.display = 'block';
+
+        // disable input text and selector
+        selectElem.disabled = true;
+        inputElem.disabled = true;
+        elem.disabled = true;
 
         fetch('/get-item/', {
             method: 'POST',
@@ -41,6 +48,12 @@ function submit() {
             let divElem = document.querySelector('#item-fetched');
             let numItem = data.length;
             divElem.innerHTML = "";
+            loaderElem.style.display = 'none';
+
+            // undisable input text and selector
+            selectElem.disabled = false;
+            inputElem.disabled = false;
+            elem.disabled = false;
 
             if (numItem > 0) {
                 numElem.innerHTML = numItem + " items found";
@@ -86,9 +99,5 @@ function jumpToComparison(elem) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ 'item': item_cleaned })
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        console.log(data);
     })
 };

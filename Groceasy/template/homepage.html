@@ -32,11 +32,12 @@
             <div class="form-inner">
                 <input type="text" id="item-name" name="item-name" placeholder="Enter an item">
             </div>
-            <button onclick="submit();">Submit</button>
+            <button onclick="submit(this);">Submit</button>
         </div>
         <div class="warnings" id="warn"></div>
         <hr />
     </div>
+    <div id="loader" class="loader"></div>
     <div style="text-align: center; margin-right: 90px;" id="item-num"></div>
     <div class="item-list" id="item-fetched"></div>
 
