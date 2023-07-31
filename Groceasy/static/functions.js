@@ -89,15 +89,37 @@ function out(elem) {
 
 function jumpToComparison(elem) {
     let selectElem = document.querySelector('#business');
+    let inputElem = document.querySelector('#item-name');
+    let submitElem = document.querySelector('#submit-btn');
+    // let itemElems = document.querySelectorAll('.item');
+
     let business = selectElem.value;
     let item = elem.childNodes[1].innerText;
     let item_cleaned = item.replace(business, "").trim();
 
-    fetch('/get-item/compare/', {
+    // disable selector, input box, submit button, and all items to be editable
+    selectElem.disabled = true;
+    inputElem.disabled = true;
+    submitElem.disabled = true;
+    // for (let i = 0; i < itemElems.length; i++) {
+    //     itemElems[i].disabled = true;
+    // }
+
+    fetch('/get-item/fetch-compare/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ 'item': item_cleaned })
     })
+        .then(response => response.json())  // array function
+        .then(data => {
+            selectElem.disabled = false;
+            inputElem.disabled = false;
+            submitElem.disabled = false;
+
+            // jump to another html page
+            window.location.href = '/get-item/display-compare/?data=' + data.item;
+        })
+        .catch(error => console.error('Error', error));
 };

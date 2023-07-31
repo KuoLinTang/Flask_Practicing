@@ -31,8 +31,8 @@ def get_item():
         return list_objs
 
 
-@app.route('/get-item/compare/', methods=['POST'])
-def compare():
+@app.route('/get-item/fetch-compare/', methods=['POST'])
+def fetch_compare():
 
     data = request.json
     item = data['item']
@@ -44,9 +44,16 @@ def compare():
         print(k)
         item_obj_dict[k] = ItemData.list_to_object(v, k)
 
-    return render_template('comparison.html')
+    print(item)
+    return {'item': item}
     # return item_obj_dict  # should return a new page
 
 
+@app.route('/get-item/display-compare/', methods=['GET'])
+def display_compare():
+    data = request.args.get('data')
+    return render_template('comparison.html', item=data)
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
