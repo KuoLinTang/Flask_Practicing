@@ -47,12 +47,12 @@ select:invalid {
 
 .loader {
     display: none;
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 50%;
     z-index: 1;
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
     margin: -76px 0 0 -76px;
     border: 16px solid #f3f3f3;
     border-radius: 50%;
