@@ -10,8 +10,19 @@
 
 <body>
     <div>
-        Comparing {{item}}
+        <!-- Comparing {{item}} -->
     </div>
+    <script>
+        let queryString = window.location.search;
+        let urlParams = new URLSearchParams(queryString);
+        let data = urlParams.get('data');
+
+        // console.log(data);
+        let { "ASDA": asda, "Sainsbury's": sainsburys, "Tesco": tesco } = JSON.parse(data);  // string to objects
+        console.log(asda);
+        console.log(sainsburys);
+        console.log(tesco);
+    </script>
 </body>
 
 </html>
