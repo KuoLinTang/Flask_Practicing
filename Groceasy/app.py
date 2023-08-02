@@ -1,7 +1,12 @@
 from flask import Flask, render_template, request
 from grocery_scraping import all_in_one
 from itemdata import ItemData
+import json
 
+# disable warnings, only show errors
+import logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 app = Flask('Stock Exchanger', static_folder='static',
             template_folder='template')
@@ -41,18 +46,14 @@ def fetch_compare():
 
     item_obj_dict = {}
     for k, v in item_list_dict.items():
-        print(k)
         item_obj_dict[k] = ItemData.list_to_object(v, k)
 
-    print(item)
-    return {'item': item}
-    # return item_obj_dict  # should return a new page
+    return item_obj_dict
 
 
 @app.route('/get-item/display-compare/', methods=['GET'])
 def display_compare():
-    data = request.args.get('data')
-    return render_template('comparison.html', item=data)
+    return render_template('comparison.html')
 
 
 if __name__ == '__main__':

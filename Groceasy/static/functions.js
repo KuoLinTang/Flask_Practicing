@@ -56,7 +56,7 @@ function submit(elem) {
             elem.disabled = false;
 
             if (numItem > 0) {
-                numElem.innerHTML = numItem + " items found";
+                numElem.innerHTML = numItem + " items found in " + business;
 
                 for (let i = 0; i < numItem; i++) {
                     let item = data[i];
@@ -88,22 +88,24 @@ function out(elem) {
 }
 
 function jumpToComparison(elem) {
+    let loaderElem = document.querySelector('#loader');
     let selectElem = document.querySelector('#business');
     let inputElem = document.querySelector('#item-name');
     let submitElem = document.querySelector('#submit-btn');
-    // let itemElems = document.querySelectorAll('.item');
+    let itemElems = document.querySelectorAll('div.item');  // get all item elements
 
     let business = selectElem.value;
     let item = elem.childNodes[1].innerText;
     let item_cleaned = item.replace(business, "").trim();
 
     // disable selector, input box, submit button, and all items to be editable
+    loaderElem.style.display = 'block';
     selectElem.disabled = true;
     inputElem.disabled = true;
     submitElem.disabled = true;
-    // for (let i = 0; i < itemElems.length; i++) {
-    //     itemElems[i].disabled = true;
-    // }
+    for (let i = 0; i < itemElems.length; i++) {
+        itemElems[i].style.pointerEvents = 'none';
+    }
 
     fetch('/get-item/fetch-compare/', {
         method: 'POST',
@@ -114,12 +116,14 @@ function jumpToComparison(elem) {
     })
         .then(response => response.json())  // array function
         .then(data => {
-            selectElem.disabled = false;
-            inputElem.disabled = false;
-            submitElem.disabled = false;
-
             // jump to another html page
-            window.location.href = '/get-item/display-compare/?data=' + data.item;
+            window.location.href = '/get-item/display-compare/?data=' + encodeURIComponent(JSON.stringify(data));
         })
         .catch(error => console.error('Error', error));
 };
+
+function displayComparison(data) {
+
+}
+
+
