@@ -1,0 +1,15 @@
+.title-bar {
+    display: flex;
+}
+
+.go-back {
+    align-items: center;
+    height: 20px;
+    width: 80px;
+    margin-right: 20px
+}
+
+.title-text {
+    font-size: 20px;
+    text-align: center left;
+}

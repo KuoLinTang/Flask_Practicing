@@ -5,19 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
     <title>Groceasy</title>
-    <link rel="stylesheet" type="text/css" href="../static/css-selectors.css" />
+    <link rel="stylesheet" type="text/css" href="http://192.168.1.164:5000/static/css-selectors-home.css" />
     <!-- <link rel="shortcut icon" href="#" /> -->
 </head>
 
 <body>
-    <div class="title-bar">
-        <div class="title-left">Welcome to Groceasy!</div>
-        <div class="title-right">
-            <img class="icon" id="download-icon" alt="Download" title="Download all data"
-                src="../static/img/icons8-download-48.png" width="30px" height="30px" />
-            <img onclick="clearAll();" id="clear-icon" alt="Clear and restart" title="Clear all entered values"
-                src="../static/img/icons8-restart-50.png" width="30px" height="30px" />
+    <div>
+        <div class="title-bar">
+            <div class="title-left">
+                Groceasy
+            </div>
+            <div class="title-right">
+                <img class="icon" id="download-icon" alt="Download" title="Download all data"
+                    src="../static/img/icons8-download-48.png" width="30px" height="30px" />
+                <img class="icon" onclick="clearAll();" id="clear-icon" alt="Clear and restart"
+                    title="Clear all entered values" src="../static/img/icons8-restart-50.png" width="30px"
+                    height="30px" />
+            </div>
         </div>
+        <div class="subtitle-text">
+            We make grocery easy
+        </div>
+        <br />
     </div>
     <div>
         <div class="form">
@@ -33,7 +42,7 @@
             <div class="form-inner">
                 <input type="text" id="item-name" name="item-name" placeholder="Enter an item">
             </div>
-            <button onclick="submit(this);" id="submit-btn">Submit</button>
+            <button onclick="submit(this);" id="submit-btn">SUBMIT</button>
         </div>
         <div class="warnings" id="warn"></div>
         <hr />
@@ -42,7 +51,7 @@
     <div style="text-align: center; margin-right: 90px;" id="item-num"></div>
     <div class="item-list" id="item-fetched"></div>
 
-    <script src="../static/functions.js"></script>
+    <script src="http://192.168.1.164:5000/static/functions.js"></script>
 </body>
 
 </html>

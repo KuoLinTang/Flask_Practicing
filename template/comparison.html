@@ -4,14 +4,16 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
-    <title>Groceasy</title>
-    <!-- <link rel="stylesheet" type="text/css" href="../static/css-selectors.css" /> -->
+    <title>Groceasy Comparing</title>
+    <link rel="stylesheet" type="text/css" href="http://192.168.1.164:5000/static/css-selectors-com.css" />
 </head>
 
 <body>
-    <div>
-        <!-- Comparing {{item}} -->
+    <div class="title-bar">
+        <button class="go-back" onclick="goBack();" onmouseover="over(this);" onmouseout="out(this);">GO BACK</button>
+        <div class="title-text">Groceasy</div>
     </div>
+    <script src="http://192.168.1.164:5000/static/functions.js"></script>
     <script>
         let queryString = window.location.search;
         let urlParams = new URLSearchParams(queryString);

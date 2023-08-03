@@ -14,6 +14,7 @@ function submit(elem) {
     let selectElem = document.querySelector('#business');
     let inputElem = document.querySelector('#item-name');
     let warnElem = document.querySelector('#warn');
+    let iconElem = document.querySelectorAll('img.icon');
 
     let [business, item] = [selectElem.value, inputElem.value.trim()];
 
@@ -34,6 +35,9 @@ function submit(elem) {
         selectElem.disabled = true;
         inputElem.disabled = true;
         elem.disabled = true;
+        for (let i = 0; i < iconElem.length; i++) {
+            iconElem[i].style.pointerEvents = 'none';
+        }
 
         fetch('/get-item/', {
             method: 'POST',
@@ -54,6 +58,9 @@ function submit(elem) {
             selectElem.disabled = false;
             inputElem.disabled = false;
             elem.disabled = false;
+            for (let i = 0; i < iconElem.length; i++) {
+                iconElem[i].style.pointerEvents = 'auto';
+            }
 
             if (numItem > 0) {
                 numElem.innerHTML = numItem + " items found in " + business;
@@ -87,12 +94,17 @@ function out(elem) {
     elem.style.backgroundColor = '#E0FFFF';
 }
 
+function goBack() {
+    window.history.back();
+}
+
 function jumpToComparison(elem) {
     let loaderElem = document.querySelector('#loader');
     let selectElem = document.querySelector('#business');
     let inputElem = document.querySelector('#item-name');
     let submitElem = document.querySelector('#submit-btn');
     let itemElems = document.querySelectorAll('div.item');  // get all item elements
+    let iconElem = document.querySelectorAll('img.icon');  // get all icons
 
     let business = selectElem.value;
     let item = elem.childNodes[1].innerText;
@@ -105,6 +117,9 @@ function jumpToComparison(elem) {
     submitElem.disabled = true;
     for (let i = 0; i < itemElems.length; i++) {
         itemElems[i].style.pointerEvents = 'none';
+    }
+    for (let i = 0; i < iconElem.length; i++) {
+        iconElem[i].style.pointerEvents = 'none';
     }
 
     fetch('/get-item/fetch-compare/', {
@@ -121,9 +136,4 @@ function jumpToComparison(elem) {
         })
         .catch(error => console.error('Error', error));
 };
-
-function displayComparison(data) {
-
-}
-
 

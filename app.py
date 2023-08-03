@@ -1,14 +1,13 @@
 from flask import Flask, render_template, request
 from grocery_scraping import all_in_one
 from itemdata import ItemData
-import json
 
 # disable warnings, only show errors
 import logging
 log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
+log.setLevel(logging.INFO)
 
-app = Flask('Stock Exchanger', static_folder='static',
+app = Flask('Groceasy', static_folder='static',
             template_folder='template')
 
 
@@ -42,7 +41,7 @@ def fetch_compare():
     data = request.json
     item = data['item']
 
-    item_list_dict = all_in_one.get_all_businesses(item=item, n=10)
+    item_list_dict = all_in_one.get_all_businesses(item=item, n=5)
 
     item_obj_dict = {}
     for k, v in item_list_dict.items():
