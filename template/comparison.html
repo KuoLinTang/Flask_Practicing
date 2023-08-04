@@ -14,7 +14,7 @@
         <button class="go-back" onclick="goBack();" onmouseover="over(this);" onmouseout="out(this);">GO BACK</button>
         <div class="title">
             <span class="title-text">Groceasy</span>
-            <span class="subtitle-text">Make your grocery easy</span>
+            <span class="subtitle-text">makes your grocery easy</span>
         </div>
     </div>
     <div class="contents">
@@ -38,57 +38,28 @@
         let urlParams = new URLSearchParams(queryString);
         let data = urlParams.get('data');
 
-        console.log(data);
-
         let { "ASDA": asda, "Sainsbury's": sainsburys, "Tesco": tesco } = JSON.parse(data);  // string to objects
 
-        console.log(asda);
-        for (let i = 0; i < asda.length; i++) {
-            let asdaElem = document.querySelector('#asda-list');
-            asdaElem.innerHTML += '<div class="item">' +
-                '<div class="image-div" onmouseover="over(this);" onmouseout="out(this);">' +
-                '<img width="90px" height="90px" src="' + asda[i].img + '">' +
-                '</div>' +
-                '<div class="info">' +
-                '<div style="font-weight:bold;">' + asda[i].name + '</div>' +
-                '<div>' + asda[i].volume + '</div>' +
-                '<div>' + asda[i].price + '</div>' +
-                '<div>' + asda[i].unit_price + '</div>' +
-                '</div>' +
-                '</div>'
+        function displayData(business, data) {
+            let elemID = '#' + business + '-list';
+            for (let i = 0; i < data.length; i++) {
+                let elem = document.querySelector(elemID);
+                elem.innerHTML +=
+                    '<div class="item" onmouseover="over(this);" onmouseout="out(this);">' +
+                    '<div class="image-div">' +
+                    '<img width="100px" height="100px" src="' + data[i].img + '">' +
+                    '</div><div class="info">' +
+                    '<div style="font-weight:bold;">' + data[i].name + '</div>' +
+                    '<div>' + data[i].volume + '</div>' +
+                    '<div>' + data[i].price + '</div>' +
+                    '<div>' + data[i].unit_price + '</div>' +
+                    '</div></div>'
+            }
         }
 
-        for (let i = 0; i < sainsburys.length; i++) {
-            let sainElem = document.querySelector('#sainsburys-list');
-            sainElem.innerHTML +=
-                '<div class="item" onmouseover="over(this);" onmouseout="out(this);">' +
-                '<div class="image-div">' +
-                '<img width="90px" height="90px" src="' + sainsburys[i].img + '">' +
-                '</div>' +
-                '<div class="info">' +
-                '<div style="font-weight:bold;">' + sainsburys[i].name + '</div>' +
-                '<div>' + sainsburys[i].volume + '</div>' +
-                '<div>' + sainsburys[i].price + '</div>' +
-                '<div>' + sainsburys[i].unit_price + '</div>' +
-                '</div>' +
-                '</div>'
-        }
-
-        for (let i = 0; i < tesco.length; i++) {
-            let tescoElem = document.querySelector('#tesco-list');
-            tescoElem.innerHTML +=
-                '<div class="item" onmouseover="over(this);" onmouseout="out(this);">' +
-                '<div class="image-div">' +
-                '<img width="90px" height="90px" src="' + tesco[i].img + '">' +
-                '</div>' +
-                '<div class="info">' +
-                '<div style="font-weight:bold;">' + tesco[i].name + '</div>' +
-                '<div>' + tesco[i].volume + '</div>' +
-                '<div>' + tesco[i].price + '</div>' +
-                '<div>' + tesco[i].unit_price + '</div>' +
-                '</div>' +
-                '</div>'
-        }
+        displayData('asda', asda);
+        displayData('sainsburys', sainsburys);
+        displayData('tesco', tesco);
     </script>
 </body>
 

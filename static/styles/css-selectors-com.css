@@ -16,10 +16,11 @@ body {
 }
 
 .go-back {
-    height: 20px;
+    height: 25px;
     width: 80px;
     margin-left: 10px;
     margin-right: 20px;
+    background-color: #C3FDB8;
 }
 
 .title {
@@ -28,12 +29,13 @@ body {
 }
 
 .title-text {
+    font-weight: bold;
     font-size: 20px;
 }
 
 .subtitle-text {
     margin-left: 20px;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .contents {
@@ -53,7 +55,7 @@ body {
 }
 
 .item-list {
-    height: 500px;
+    height: 550px;
     overflow-y: scroll;
 }
 
@@ -62,6 +64,7 @@ body {
     display: flex;
     margin: 10px;
     padding: 5px;
+    height: 110px
 }
 
 .image-div {
