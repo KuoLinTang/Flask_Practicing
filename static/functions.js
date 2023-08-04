@@ -2,11 +2,14 @@ function clearAll() {
     let selectElem = document.querySelector('#business');
     let inputElem = document.querySelector('#item-name');
     let numElem = document.querySelector('#item-num');
-    let divElement = document.querySelector('#item-fetched');
+    let divElem = document.querySelector('#item-fetched');
+    let warnElem = document.querySelector('#warn');
     selectElem.value = "";
     inputElem.value = "";
     numElem.innerHTML = "";
-    divElement.innerHTML = "";
+    divElem.innerHTML = "";
+    warnElem.innerHTML = "";
+    warnElem.style.display = 'none';
 };
 
 function submit(elem) {
@@ -28,6 +31,7 @@ function submit(elem) {
         warnElem.textContent = 'Please select a grocery store.';
         warnElem.style.display = 'block';
     } else {
+        warnElem.textContent = '';
         warnElem.style.display = 'none';
         loaderElem.style.display = 'block';
 
@@ -87,11 +91,11 @@ function submit(elem) {
 };
 
 function over(elem) {
-    elem.style.backgroundColor = '#B3D9D9';
+    elem.style.backgroundColor = '#B5EAAA';
 }
 
 function out(elem) {
-    elem.style.backgroundColor = '#E0FFFF';
+    elem.style.backgroundColor = '#C3FDB8';
 }
 
 function goBack() {
