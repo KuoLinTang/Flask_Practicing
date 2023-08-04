@@ -5,25 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
     <title>Groceasy Comparing</title>
-    <link rel="stylesheet" type="text/css" href="http://192.168.1.164:5000/static/css-selectors-com.css" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/css-selectors-com.css') }}" />
+    <!-- <link rel="stylesheet" type="text/css" href="../static/styles/css-selectors-com.css" /> -->
 </head>
 
 <body>
     <div class="title-bar">
         <button class="go-back" onclick="goBack();" onmouseover="over(this);" onmouseout="out(this);">GO BACK</button>
-        <div class="title-text">Groceasy</div>
+        <div class="title">
+            <span class="title-text">Groceasy</span>
+            <span class="subtitle-text">Make your grocery easy</span>
+        </div>
     </div>
-    <script src="http://192.168.1.164:5000/static/functions.js"></script>
+    <div class="contents">
+        <div class="list">
+            <div class="business-title">ASDA</div>
+            <div class="item-list" id="asda-list"></div>
+        </div>
+        <div class="list">
+            <div class="business-title">SAINSBURYS</div>
+            <div class="item-list" id="sainsburys-list"></div>
+        </div>
+        <div class="list">
+            <div class="business-title">TESCO</div>
+            <div class="item-list" id="tesco-list"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static',filename='functions.js') }}"></script>
     <script>
         let queryString = window.location.search;
         let urlParams = new URLSearchParams(queryString);
         let data = urlParams.get('data');
 
-        // console.log(data);
+        console.log(data);
+
         let { "ASDA": asda, "Sainsbury's": sainsburys, "Tesco": tesco } = JSON.parse(data);  // string to objects
+
         console.log(asda);
-        console.log(sainsburys);
-        console.log(tesco);
+        for (let i = 0; i < asda.length; i++) {
+            let asdaElem = document.querySelector('#asda-list');
+            asdaElem.innerHTML += '<div class="item">' +
+                '<div class="image-div" onmouseover="over(this);" onmouseout="out(this);">' +
+                '<img width="90px" height="90px" src="' + asda[i].img + '">' +
+                '</div>' +
+                '<div class="info">' +
+                '<div style="font-weight:bold;">' + asda[i].name + '</div>' +
+                '<div>' + asda[i].volume + '</div>' +
+                '<div>' + asda[i].price + '</div>' +
+                '<div>' + asda[i].unit_price + '</div>' +
+                '</div>' +
+                '</div>'
+        }
+
+        for (let i = 0; i < sainsburys.length; i++) {
+            let sainElem = document.querySelector('#sainsburys-list');
+            sainElem.innerHTML +=
+                '<div class="item" onmouseover="over(this);" onmouseout="out(this);">' +
+                '<div class="image-div">' +
+                '<img width="90px" height="90px" src="' + sainsburys[i].img + '">' +
+                '</div>' +
+                '<div class="info">' +
+                '<div style="font-weight:bold;">' + sainsburys[i].name + '</div>' +
+                '<div>' + sainsburys[i].volume + '</div>' +
+                '<div>' + sainsburys[i].price + '</div>' +
+                '<div>' + sainsburys[i].unit_price + '</div>' +
+                '</div>' +
+                '</div>'
+        }
+
+        for (let i = 0; i < tesco.length; i++) {
+            let tescoElem = document.querySelector('#tesco-list');
+            tescoElem.innerHTML +=
+                '<div class="item" onmouseover="over(this);" onmouseout="out(this);">' +
+                '<div class="image-div">' +
+                '<img width="90px" height="90px" src="' + tesco[i].img + '">' +
+                '</div>' +
+                '<div class="info">' +
+                '<div style="font-weight:bold;">' + tesco[i].name + '</div>' +
+                '<div>' + tesco[i].volume + '</div>' +
+                '<div>' + tesco[i].price + '</div>' +
+                '<div>' + tesco[i].unit_price + '</div>' +
+                '</div>' +
+                '</div>'
+        }
     </script>
 </body>
 
