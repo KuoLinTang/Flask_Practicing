@@ -66,11 +66,14 @@ def fetch_top_items(driver: webdriver, n: int):
 def asda(item: str = 'milk', n: int = 5):
 
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('log-level=3')
+    # solve DevToolsActivePort file doesn't exist error
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
     # not opening a browser while avoiding being detected
     chrome_options.add_argument('--headless=new')
     chrome_options.add_argument(
         '--disable-blink-features=AutomationControlled')
+    chrome_options.add_argument('log-level=3')
     browser = webdriver.Chrome(options=chrome_options)
     browser.get('https://groceries.asda.com/')
 
