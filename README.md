@@ -21,3 +21,4 @@ The app allows users to compare the price of items across three large UK grocery
 ## COMMENTS
 * We use Python Flask framework to design the app
 * We use Selenium to scrap item data
+* We use Docker to containerise the app with a base Python image
