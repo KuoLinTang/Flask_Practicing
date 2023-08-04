@@ -1,4 +1,3 @@
-# Flask Practicing
-## Projects
-1. Stock Price
-2. Item Price
+<h3>Groceasy</h3>
+<h4>A place to make grocery shopping easy</h4>
+<hr/>
