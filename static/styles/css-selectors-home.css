@@ -1,0 +1,149 @@
+/* overall */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #DBF9DB;
+}
+
+.all-title {
+    padding: 5px;
+    background-color: #50C878;
+}
+
+.title-bar {
+    display: flex;
+}
+
+.title-left {
+    flex: auto;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.title-right {
+    margin-right: 20px;
+}
+
+.subtitle-text {
+    margin-right: 90px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.icon {
+    margin-right: 10px;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 90px;
+    flex-wrap: wrap;
+}
+
+.warnings {
+    display: none;
+    color: #FF0000;
+    font-weight: bold;
+    text-align: center;
+    margin-right: 90px;
+}
+
+select:invalid {
+    color: gray;
+}
+
+.form-inner {
+    margin: 10px;
+}
+
+.loader {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 80px;
+    height: 80px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.item-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.item {
+    border: 2px groove #C0C0C0;
+    border-radius: 10px;
+    background-color: #C3FDB8;
+    margin: 10px;
+    padding: 5px;
+    flex: none;
+    width: 17%;
+}
+
+.prop-item {
+    text-align: center;
+}
+
+@media(max-width:1300px) {
+    .item {
+        width: 21%;
+    }
+}
+
+@media(max-width:850px) {
+    .item {
+        width: 28%;
+    }
+}
+
+@media(max-width:620px) {
+    .title-left {
+        font-size: 25px;
+    }
+}
+
+@media(max-width:600px) {
+    .item {
+        width: 42%;
+    }
+}
+
+@media(max-width:400px) {
+    .item {
+        width: 90%;
+    }
+}
