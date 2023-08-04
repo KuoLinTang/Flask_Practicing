@@ -41,7 +41,7 @@ def fetch_compare():
     data = request.json
     item = data['item']
 
-    item_list_dict = all_in_one.get_all_businesses(item=item, n=5)
+    item_list_dict = all_in_one.get_all_businesses(item=item, n=10)
 
     item_obj_dict = {}
     for k, v in item_list_dict.items():
@@ -56,4 +56,4 @@ def display_compare():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=80)
